@@ -1,12 +1,23 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
+	"time"
+	"encoding/json"
 )
 
+type Project struct {
+	Name string `json:"nome"`
+	Time string `json:"horario"`
+}
+
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, World!")
+	now := time.Now().UTC().Format(time.RFC3339)
+	response := Project{
+		Name: "Projeto Korp",
+		Time: now,
+	}
+	json.NewEncoder(w).Encode(response)
 }
 
 func main() {
